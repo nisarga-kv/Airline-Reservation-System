@@ -1,0 +1,9 @@
+{
+  "java.project.referencedLibraries": [
+    "lib/mysql-connector-java-*.jar"
+  ],
+  "java.project.settings": {
+    "driverInitialization": "// Class.forName(\"com.mysql.cj.jdbc.Driver\");",
+    "getConnectionMethod": "// public static Connection getConnection() throws SQLException {\n//     try {\n//         Class.forName(\"com.mysql.cj.jdbc.Driver\");\n//     } catch (ClassNotFoundException e) {\n//         throw new SQLException(\"MySQL JDBC Driver not found.\", e);\n//     }\n//     String url = \"jdbc:mysql://localhost:3306/airlines\";\n//     String user = \"root\";\n//     String password = \"admin\"; // Change this to your actual MySQL password\n//     return DriverManager.getConnection(url, user, password);\n// }"
+  }
+}

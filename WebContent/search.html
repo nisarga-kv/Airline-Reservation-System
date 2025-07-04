@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Search Flights</title>
+  <style>
+    body { font-family: Arial; background: #f5f5f5; padding: 20px; }
+    input, select, button { margin: 10px; padding: 10px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { border: 1px solid #ddd; padding: 10px; text-align: center; }
+  </style>
+</head>
+<body>
+
+  <h2>Find Flights</h2>
+  <form onsubmit="searchFlights(); return false;">
+    <input type="text" id="source" placeholder="From" required>
+    <input type="text" id="destination" placeholder="To" required>
+    <button type="submit">Search</button>
+  </form>
+
+  <div id="results"></div>
+
+  <script>
+    function searchFlights() {
+      const src = document.getElementById('source').value;
+      const dest = document.getElementById('destination').value;
+
+      fetch(`/search?source=${src}&destination=${dest}`)
+        .then(res => res.json())
+        .then(data => {
+          let html = '<table><tr><th>Flight No</th><th>Date</th><th>Seats</th><th>Book</th></tr>';
+          data.forEach(flight => {
+            html += `<tr>
+                      <td>${flight.flight_no}</td>
+                      <td>${flight.date}</td>
+                      <td>${flight.seats}</td>
+                      <td><button onclick="bookFlight(${flight.id})">Book</button></td>
+                    </tr>`;
+          });
+          html += '</table>';
+          document.getElementById('results').innerHTML = html;
+        });
+    }
+
+    function bookFlight(flightId) {
+      fetch(`/book?flightId=${flightId}`, { method: 'POST' })
+        .then(res => res.text())
+        .then(msg => alert(msg));
+    }
+  </script>
+
+</body>
+</html>
